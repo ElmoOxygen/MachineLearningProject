@@ -85,7 +85,7 @@ testingfit <- training[-part,]
 # Model Fitting
 
 My first model will use a decision tree.
-```{r}
+```{r, cache=TRUE}
 fitrpart <- rpart(classe~., data=trainingfit, method=c("class"))
 fancyRpartPlot(fitrpart)
 predictionrpart <- predict(fitrpart, testingfit[,-53], type="class")
@@ -94,13 +94,13 @@ confusionMatrix(testingfit$classe, predictionrpart)
 The decision tree doesn't offer great predictions, but given closer inspection may lead to some interesting insights into our data.
 
 Random Forest will likely give more accurate predictions.
-```{r}
+```{r, cache=TRUE}
 time <- proc.time()
 (fitRF <- randomForest(classe ~ ., data=trainingfit, importance = TRUE))
 proc.time()-time
 ```
 
-```{r}
+```{r, cache=TRUE}
 predictionRF <- predict(fitRF, testingfit[,-53], type="response")
 confusionMatrix(testingfit$classe, predictionRF)
 ```
